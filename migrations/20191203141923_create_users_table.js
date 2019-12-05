@@ -4,9 +4,9 @@ exports.up = function(knex, Promise) {
     t.increments('id').unsigned().primary();
     t.string('nama_user').nullable();
     t.string('password').notNull();
-    t.dateTime('createdAt').nullable();
-    t.dateTime('updatedAt').nullable();
-    t.dateTime('deletedAt').nullable();
+    t.dateTime('created_at').nullable();
+    t.dateTime('updated_at').nullable();
+    t.dateTime('deleted_at').nullable();
   });
 };
 

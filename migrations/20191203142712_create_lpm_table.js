@@ -20,9 +20,9 @@ exports.up = function(knex, Promise) {
     t.decimal('lpm_p06_p18_jam', 5, 1).nullable();
     t.decimal('lpm_p08_p16_percent', 6, 2).nullable();
 
-    t.dateTime('createdAt').nullable();
-    t.dateTime('updatedAt').nullable();
-    t.dateTime('deletedAt').nullable();
+    t.dateTime('created_at').nullable();
+    t.dateTime('updated_at').nullable();
+    t.dateTime('deleted_at').nullable();
   })
 };
 

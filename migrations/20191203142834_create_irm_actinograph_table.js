@@ -21,9 +21,9 @@ exports.up = function(knex, Promise) {
     t.decimal('jr19_20', 6, 2).nullable();
     t.decimal('sum_radiasi_kal_per_cm2', 6, 2).nullable();
     
-    t.dateTime('createdAt').nullable();
-    t.dateTime('updatedAt').nullable();
-    t.dateTime('deletedAt').nullable();
+    t.dateTime('created_at').nullable();
+    t.dateTime('updated_at').nullable();
+    t.dateTime('deleted_at').nullable();
 
   });
 };

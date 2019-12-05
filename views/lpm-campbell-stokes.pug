@@ -3,6 +3,7 @@
 extends layout-other-menu.pug
 block vars
   - var title = "Data Lama Penyinaran Matahari"
+  //- - var stasiuns = stasiuns
 
 block content
   .wrapper
@@ -34,11 +35,14 @@ block content
 
       
       //- (style={'margin-left': '-20%', 'margin-right': '-20%'})
+      //- ul
+      //-   each val in stasiuns
+      //-     li= val.id
       section
         h3.major Table
         h4 Default
         .table-wrapper
-          table.alt
+          table#pickle.alt
             thead
               tr
                 th WMOID
@@ -60,27 +64,36 @@ block content
                 th Lama Penyinaran 06:00 - 18:00 (jam)
                 th Lama Penyinaran 08:00 - 16:00 (%)
             tbody
-              tr
-                td Item One
-                td Ante turpis integer aliquet porttitor.
-                td 29.99
-              tr
-                td Item Two
-                td Vis ac commodo adipiscing arcu aliquet.
-                td 19.99
-              tr
-                td Item Three
-                td  Morbi faucibus arcu accumsan lorem.
-                td 29.99
-              tr
-                td Item Four
-                td Vitae integer tempus condimentum.
-                td 19.99
-              tr
-                td Item Five
-                td Ante turpis integer aliquet porttitor.
-                td 29.99
-            tfoot
-              tr
-                td(colspan='2')
-                td 100.00        
+              each stasiun in stasiuns
+                tr
+                  td WMOID
+                  td Nama Stasiun
+                  td #{stasiun.tgl}
+                  td #{stasiun.p05_06}
+                  td #{stasiun.p06_07}
+                  td #{stasiun.p07_08}
+                  td #{stasiun.p08_09}
+                  td #{stasiun.p09_10}
+                  td #{stasiun.p10_11}
+                  td #{stasiun.p11_12}
+                  td #{stasiun.p12_13}
+                  td #{stasiun.p13_14}
+                  td #{stasiun.p14_15}
+                  td #{stasiun.p15_16}
+                  td #{stasiun.p16_17}
+                  td #{stasiun.p17_18}
+                  td #{stasiun.lpm_p06_p18_jam}
+                  td #{stasiun.lpm_p08_p16_percent}
+              //- else
+            //- tfoot
+            //-   tr
+            //-     td(colspan='2')
+            //-     td 100.00        
+
+block js-script
+  script(src='http://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css')
+  script(src='http://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js')
+  script.
+    $(document).ready(function() {
+        $('#pickle').DataTable();
+    });

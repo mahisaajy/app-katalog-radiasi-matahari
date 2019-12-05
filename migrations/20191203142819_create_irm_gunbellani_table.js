@@ -9,9 +9,9 @@ exports.up = function(knex, Promise) {
     t.decimal('sum_radiasi_cal_per_cm2', 7, 2).nullable(); // mungkin bisa dibesarkan ukurannya
     t.decimal('sum_radiasi_joule', 10, 4).nullable(); // mungkin bisa dibesarkan ukurannya
     
-    t.dateTime('createdAt').nullable();
-    t.dateTime('updatedAt').nullable();
-    t.dateTime('deletedAt').nullable();
+    t.dateTime('created_at').nullable();
+    t.dateTime('updated_at').nullable();
+    t.dateTime('deleted_at').nullable();
   });
 };
 
