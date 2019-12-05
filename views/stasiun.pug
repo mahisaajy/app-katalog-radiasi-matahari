@@ -1,0 +1,56 @@
+extends layout-other-menu.pug
+
+block vars
+  - var title = "Stasiun BMKG"
+  - var subtitle = "Aplikasi Katalog Data Radiasi Matahari"
+
+
+block content
+  .wrapper
+    .inner
+      section
+        h3.major Stasiun
+        h4 Default
+        .table-wrapper
+          table
+            thead
+              tr
+                th Balai
+                th WMOID
+                th Stasiun
+                th Download LPM
+                th Download IRM GB
+                th Download IRM A
+            tbody
+              each stasiun in stasiuns
+                tr
+                  td Balai#{stasiun.region_id}
+                  td #{stasiun.wmoid}
+                  td #{stasiun.nama_stasiun}
+                  td 
+                    a(href=`/lpm/${stasiun.id}/download`).button.primary.small Download LPM
+                  td
+                    a(href=`/irm-gb/${stasiun.id}/download`).button.primary.small Download IRM GB
+                  td
+                    a(href=`/irm-a/${stasiun.id}/download`).button.primary.small Download IRM A
+              //- tr
+              //-   td Item Two
+              //-   td Vis ac commodo adipiscing arcu aliquet.
+              //-   td 19.99
+              //- tr
+              //-   td Item Three
+              //-   td  Morbi faucibus arcu accumsan lorem.
+              //-   td 29.99
+              //- tr
+              //-   td Item Four
+              //-   td Vitae integer tempus condimentum.
+              //-   td 19.99
+              //- tr
+              //-   td Item Five
+              //-   td Ante turpis integer aliquet porttitor.
+              //-   td 29.99
+            //- tfoot
+            //-   tr
+            //-     td(colspan='2')
+            //-     td 100.00
+        

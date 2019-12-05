@@ -13,18 +13,96 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/stasiun', async function(req, res, next){
+  let stasiuns = await knex('stasiuns').where('region_id', '!=', 0).orderBy('region_id', 'asc');
+  res.render('stasiun', {stasiuns: stasiuns});
+})
+
 router.get('/lpm', async function(req, res, next){
   let stasiuns = await knex('lpm').leftJoin('stasiuns', 'lpm.id_stasiun', 'stasiuns.id');
   // res.send(stasiuns);
   res.render('lpm-campbell-stokes', {stasiuns: stasiuns, test: "test"});
 });
 
-router.get('/irm-gunbellani', function(req, res, next){
+router.get('/lpm/:idStasiun/download', async function(req, res, next){
+  let id_stasiun = req.params.idStasiun;
+  let lpms = await knex('lpm').where('id_stasiun', id_stasiun);
+
+  let stasiun = await knex('stasiuns').where('id', id_stasiun).first();
+
+
+  if(typeof XLSX == 'undefined') XLSX = require('xlsx');
+  var ws = XLSX.utils.json_to_sheet(lpms);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Lama Penyinaran Matahari");
+  // XLSX.writeFile(wb, "public/sheetjs.xlsx");
+
+  var wbbuf = XLSX.write(wb, {
+      type: 'base64'
+  });
+  res.writeHead(200, {
+    'Content-Disposition': 'attachment;filename='+ stasiun.wmoid + ' ' + stasiun.nama_stasiun +' - LPM.xlsx',
+    'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  });
+  res.end( new Buffer(wbbuf, 'base64') );
+
+  // res.send(lpms);
+});
+
+router.get('/irm-gb', function(req, res, next){
   res.render('irm-gunbellani');
 });
 
-router.get('/irm-actinograph', function(req, res, next){
+router.get('/irm-gb/:idStasiun/download', async function(req, res, next){
+  let id_stasiun = req.params.idStasiun;
+  let irmgbs = await knex('irm_gunbellani').where('id_stasiun', id_stasiun);
+  let stasiun = await knex('stasiuns').where('id', id_stasiun).first();
+
+
+  if(typeof XLSX == 'undefined') XLSX = require('xlsx');
+  var ws = XLSX.utils.json_to_sheet(irmgbs);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Lama Penyinaran Matahari");
+  // XLSX.writeFile(wb, "public/sheetjs.xlsx");
+
+  var wbbuf = XLSX.write(wb, {
+      type: 'base64'
+  });
+  res.writeHead(200, {
+    'Content-Disposition': 'attachment;filename='+ stasiun.wmoid + ' ' + stasiun.nama_stasiun +' - IRM Gunbellani.xlsx',
+    'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  });
+  res.end( new Buffer(wbbuf, 'base64') );
+
+  // res.send(irmgbs);
+});
+
+router.get('/irm-a', function(req, res, next){
   res.render('irm-actinograph');
+});
+
+router.get('/irm-a/:idStasiun/download', async function(req, res, next){
+  let id_stasiun = req.params.idStasiun;
+  let irmas = await knex('irm_actinograph').where('id_stasiun', id_stasiun);
+  let stasiun = await knex('stasiuns').where('id', id_stasiun).first();
+
+
+  if(typeof XLSX == 'undefined') XLSX = require('xlsx');
+  var ws = XLSX.utils.json_to_sheet(irmas);
+  var wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Lama Penyinaran Matahari");
+  // XLSX.writeFile(wb, "public/sheetjs.xlsx");
+
+  var wbbuf = XLSX.write(wb, {
+      type: 'base64'
+  });
+  res.writeHead(200, {
+    'Content-Disposition': 'attachment;filename='+ stasiun.wmoid + ' ' + stasiun.nama_stasiun +' - IRM Actinograph.xlsx',
+    'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  });
+  res.end( new Buffer(wbbuf, 'base64') );
+
+  // res.send(irmas);
 });
 
 router.get('/test-moment', function(req, res, next){
