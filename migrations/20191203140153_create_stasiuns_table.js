@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('stasiuns', function(t){
     t.increments('id').unsigned().primary();
     t.string('nama_stasiun').nullable();
-    t.integer('wmoid').nullable();
+    t.string('wmoid').nullable();
     t.string('type_mkg').nullable();
     t.decimal('latitude', 10, 8).nullable();
     t.decimal('longitude', 11, 8).nullable();
