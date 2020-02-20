@@ -3,7 +3,7 @@
 extends layout-other-menu.pug
 block vars
   - var title = "Data Lama Penyinaran Matahari"
-  //- - var stasiuns = stasiuns
+  - var subtitle = "Aplikasi Katalog Data Radiasi Matahari"
 
 block content
   .wrapper
@@ -63,27 +63,27 @@ block content
                 th P17_18
                 th Lama Penyinaran 06:00 - 18:00 (jam)
                 th Lama Penyinaran 08:00 - 16:00 (%)
-            tbody
-              each stasiun in stasiuns
-                tr
-                  td #{stasiun.wmoid}
-                  td #{stasiun.nama_stasiun}
-                  td 
-                  td #{stasiun.p05_06}
-                  td #{stasiun.p06_07}
-                  td #{stasiun.p07_08}
-                  td #{stasiun.p08_09}
-                  td #{stasiun.p09_10}
-                  td #{stasiun.p10_11}
-                  td #{stasiun.p11_12}
-                  td #{stasiun.p12_13}
-                  td #{stasiun.p13_14}
-                  td #{stasiun.p14_15}
-                  td #{stasiun.p15_16}
-                  td #{stasiun.p16_17}
-                  td #{stasiun.p17_18}
-                  td #{stasiun.lpm_p06_p18_jam}
-                  td #{stasiun.lpm_p08_p16_percent}
+            //- tbody
+            //-   each stasiun in stasiuns
+            //-     tr
+            //-       td #{stasiun.wmoid}
+            //-       td #{stasiun.nama_stasiun}
+            //-       td 
+            //-       td #{stasiun.p05_06}
+            //-       td #{stasiun.p06_07}
+            //-       td #{stasiun.p07_08}
+            //-       td #{stasiun.p08_09}
+            //-       td #{stasiun.p09_10}
+            //-       td #{stasiun.p10_11}
+            //-       td #{stasiun.p11_12}
+            //-       td #{stasiun.p12_13}
+            //-       td #{stasiun.p13_14}
+            //-       td #{stasiun.p14_15}
+            //-       td #{stasiun.p15_16}
+            //-       td #{stasiun.p16_17}
+            //-       td #{stasiun.p17_18}
+            //-       td #{stasiun.lpm_p06_p18_jam}
+            //-       td #{stasiun.lpm_p08_p16_percent}
               //- else
             //- tfoot
             //-   tr
@@ -95,5 +95,57 @@ block js-script
   script(src='http://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js')
   script.
     $(document).ready(function() {
-        $('#pickle').DataTable();
+        $('#pickle').DataTable({
+          'initComplete': function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+                    select.append( '<option value="'+d+'">'+d+'</option>' )
+                } );
+            } );
+        },
+          'processing': true,
+          //- 'serverSide': true,
+          "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+          //- "pagingType": "full_numbers",
+          'pageLength': 5,
+          'paginate': true,
+          'autoWidth': true,
+          'ajax': '/lpm/datatable',
+          'columns': [
+            {'data': 'wmoid'},
+            {'data': 'nama_stasiun', 'width': 200},
+            {'data': 'id'},
+            {'data': 'p05_06'},
+            {'data': 'p06_07'},
+            {'data': 'p07_08'},
+            {'data': 'p08_09'},
+            {'data': 'p09_10'},
+            {'data': 'p10_11'},
+            {'data': 'p11_12'},
+            {'data': 'p12_13'},
+            {'data': 'p13_14'},
+            {'data': 'p14_15'},
+            {'data': 'p15_16'},
+            {'data': 'p16_17'},
+            {'data': 'p17_18'},
+            {'data': 'lpm_p06_p18_jam'},
+            {'data': 'lpm_p08_p16_percent'}
+          ],
+          //- 'columnDefs': [
+          //-   {targets: 1, width: '20%'}
+          //- ]
+        });
     });

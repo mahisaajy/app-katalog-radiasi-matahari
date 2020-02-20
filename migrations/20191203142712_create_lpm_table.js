@@ -23,6 +23,8 @@ exports.up = function(knex, Promise) {
     t.dateTime('created_at').nullable();
     t.dateTime('updated_at').nullable();
     t.dateTime('deleted_at').nullable();
+
+    t.index(['id_stasiun', 'tgl'], 'index_lpm');
   })
 };
 

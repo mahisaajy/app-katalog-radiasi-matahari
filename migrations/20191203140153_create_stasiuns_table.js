@@ -14,6 +14,8 @@ exports.up = function(knex, Promise) {
     t.dateTime('created_at').nullable();
     t.dateTime('updated_at').nullable();
     t.dateTime('deleted_at').nullable();
+
+    t.index(['wmoid', 'region_id'], 'index_stasiun');
   });
   
 };

@@ -4,6 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var passport = require('passport');
+var flash    = require('connect-flash');
+var bodyParser   = require('body-parser');
+var session      = require('express-session');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -18,6 +23,43 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+require('./config/passport')(passport); // pass passport for configuration
+// app.use(bodyParser()); // tambahan
+
+// required for passport
+app.use(session({ 
+  secret: 'ilovescotchscotchyscotchscotch',
+  resave: true,
+  saveUninitialized: true
+})); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+// routes ======================================================================
+// require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+//Models
+var models = require("./models");
+
+//load passport strategies 
+require('./config/passport.js')(passport, models.user);
+
+models.sequelize
+.authenticate()
+.then(() => {
+  console.log('Connection has been established successfully.');
+})
+.catch(err => {
+  console.error('Unable to connect to the database:', err);
+});
+
+// //Sync Database
+// models.sequelize.sync().then(function() {
+//     console.log('Nice! Database looks fine')
+// }).catch(function(err) {
+//     console.log(err, "Something went wrong with the Database Update!")
+// });
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

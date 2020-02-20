@@ -1,0 +1,90 @@
+extends layout-new.pug
+
+block content
+  // Begin Page Content
+  .container-fluid
+    // Page Heading
+    h1.h3.mb-2.text-gray-800 Data Intensitas Radiasi Matahari (Actinograph)
+    //- p.mb-4
+    //-   | DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the 
+    //-   a(target='_blank' href='https://datatables.net') official DataTables documentation
+    //-   | .
+    // DataTales Example
+    .card.shadow.mb-4
+      .card-header.py-3
+        h6.m-0.font-weight-bold.text-primary Tabel
+      .card-body
+        .table-responsive
+          table#dataTable.table.table-bordered(width='100%' cellspacing='0')
+            thead
+              tr
+                th WMOID
+                th Nama Stasiun
+                th Tanggal
+                th jr05_06
+                th jr06_07
+                th jr07_08
+                th jr08_09
+                th jr09_10
+                th jr10_11
+                th jr11_12
+                th jr12_13
+                th jr13_14
+                th jr14_15
+                th jr15_16
+                th jr16_17
+                th jr17_18
+                th jr18_19
+                th jr19_20
+                th Jumlah (PR) Radiasi (kal/cm2)
+            //- tfoot
+            //-   tr
+            //-     th Name
+            //-     th Position
+            //-     th Office
+            //-     th Age
+            //-     th Start date
+            //-     th Salary
+  // /.container-fluid
+  // End of Main Content
+
+block js-script
+  script(src='http://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css')
+  script(src='http://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js')
+  script.
+    $(document).ready(function() {
+        $('#dataTable').DataTable({
+          'processing': true,
+          //- 'serverSide': true,
+          "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+          //- "pagingType": "full_numbers",
+          'pageLength': 5,
+          'paginate': true,
+          'autoWidth': true,
+          'ajax': '/irm-gb/datatable',
+          'columns': [
+            {'data': 'wmoid'},
+            {'data': 'nama_stasiun', 'width': 200},
+            {'data': 'id'},
+            {'data': 'jr05_06'},
+            {'data': 'jr06_07'},
+            {'data': 'jr07_08'},
+            {'data': 'jr08_09'},
+            {'data': 'jr09_10'},
+            {'data': 'jr10_11'},
+            {'data': 'jr11_12'},
+            {'data': 'jr12_13'},
+            {'data': 'jr13_14'},
+            {'data': 'jr14_15'},
+            {'data': 'jr15_16'},
+            {'data': 'jr16_17'},
+            {'data': 'jr17_18'},
+            {'data': 'jr18_19'},
+            {'data': 'jr19_20'},
+            {'data': 'sum_radiasi_kal_per_cm2'},
+          ],
+          //- 'columnDefs': [
+          //-   {targets: 1, width: '20%'}
+          //- ]
+        });
+    });

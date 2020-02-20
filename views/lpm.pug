@@ -1,0 +1,113 @@
+extends layout-new.pug
+
+block content
+  //- .container-fluid
+  //-   // Page Heading
+  //-   h1.h3.mb-4.text-gray-800 Data Lama Penyinaran Matahari
+  //- // /.container-fluid
+
+  // Begin Page Content
+  .container-fluid
+    // Page Heading
+    h1.h3.mb-2.text-gray-800 Data Lama Penyinaran Matahari
+    //- p.mb-4
+    //-   | DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the 
+    //-   a(target='_blank' href='https://datatables.net') official DataTables documentation
+    //-   | .
+    // DataTales Example
+    .card.shadow.mb-4
+      .card-header.py-3
+        h6.m-0.font-weight-bold.text-primary Tabel
+      .card-body
+        .table-responsive
+          table#dataTable.table.table-bordered(width='100%' cellspacing='0')
+            thead
+              tr
+                th WMOID
+                th Nama Stasiun
+                th Tanggal
+                th P05_06
+                th P06_07
+                th P07_08
+                th P08_09
+                th P09_10
+                th P10_11
+                th P11_12
+                th P12_13
+                th P13_14
+                th P14_15
+                th P15_16
+                th P16_17
+                th P17_18
+                th Lama Penyinaran 06:00 - 18:00 (jam)
+                th Lama Penyinaran 08:00 - 16:00 (%)
+            //- tfoot
+            //-   tr
+            //-     th Name
+            //-     th Position
+            //-     th Office
+            //-     th Age
+            //-     th Start date
+            //-     th Salary
+  // /.container-fluid
+  // End of Main Content
+
+block js-script
+  script(src='http://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css')
+  script(src='http://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js')
+  script.
+    $(document).ready(function() {
+        $('#dataTable').DataTable({
+        //-   'initComplete': function () {
+        //-     this.api().columns().every( function () {
+        //-         var column = this;
+        //-         var select = $('<select><option value=""></option></select>')
+        //-             .appendTo( $(column.footer()).empty() )
+        //-             .on( 'change', function () {
+        //-                 var val = $.fn.dataTable.util.escapeRegex(
+        //-                     $(this).val()
+        //-                 );
+ 
+        //-                 column
+        //-                     .search( val ? '^'+val+'$' : '', true, false )
+        //-                     .draw();
+        //-             } );
+ 
+        //-         column.data().unique().sort().each( function ( d, j ) {
+        //-             select.append( '<option value="'+d+'">'+d+'</option>' )
+        //-         } );
+        //-     } );
+        //- },
+          'processing': true,
+          //- 'serverSide': true,
+          "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+          //- "pagingType": "full_numbers",
+          'pageLength': 5,
+          'paginate': true,
+          'autoWidth': true,
+          'ajax': '/lpm/datatable',
+          'columns': [
+            {'data': 'wmoid'},
+            {'data': 'nama_stasiun', 'width': 200},
+            {'data': 'id'},
+            {'data': 'p05_06'},
+            {'data': 'p06_07'},
+            {'data': 'p07_08'},
+            {'data': 'p08_09'},
+            {'data': 'p09_10'},
+            {'data': 'p10_11'},
+            {'data': 'p11_12'},
+            {'data': 'p12_13'},
+            {'data': 'p13_14'},
+            {'data': 'p14_15'},
+            {'data': 'p15_16'},
+            {'data': 'p16_17'},
+            {'data': 'p17_18'},
+            {'data': 'lpm_p06_p18_jam'},
+            {'data': 'lpm_p08_p16_percent'}
+          ],
+          //- 'columnDefs': [
+          //-   {targets: 1, width: '20%'}
+          //- ]
+        });
+    });

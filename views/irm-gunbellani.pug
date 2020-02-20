@@ -1,0 +1,66 @@
+extends layout-new.pug
+
+block content
+  // Begin Page Content
+  .container-fluid
+    // Page Heading
+    h1.h3.mb-2.text-gray-800 Data Intensitas Radiasi Matahari (Gun Bellani)
+    //- p.mb-4
+    //-   | DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the 
+    //-   a(target='_blank' href='https://datatables.net') official DataTables documentation
+    //-   | .
+    // DataTales Example
+    .card.shadow.mb-4
+      .card-header.py-3
+        h6.m-0.font-weight-bold.text-primary Tabel
+      .card-body
+        .table-responsive
+          table#dataTable.table.table-bordered(width='100%' cellspacing='0')
+            thead
+              tr
+                th WMOID
+                th Nama Stasiun
+                th Tanggal
+                th Pembacaan I
+                th Pembacaan II
+                th Jumlah Radiasi (Cal/cm2)
+                th Jumlah Radiasi (joule)
+            //- tfoot
+            //-   tr
+            //-     th Name
+            //-     th Position
+            //-     th Office
+            //-     th Age
+            //-     th Start date
+            //-     th Salary
+  // /.container-fluid
+  // End of Main Content
+
+block js-script
+  script(src='http://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css')
+  script(src='http://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js')
+  script.
+    $(document).ready(function() {
+        $('#dataTable').DataTable({
+          'processing': true,
+          //- 'serverSide': true,
+          "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+          //- "pagingType": "full_numbers",
+          'pageLength': 5,
+          'paginate': true,
+          'autoWidth': true,
+          'ajax': '/irm-gb/datatable',
+          'columns': [
+            {'data': 'wmoid'},
+            {'data': 'nama_stasiun', 'width': 200},
+            {'data': 'id'},
+            {'data': 'pembacaan_1'},
+            {'data': 'pembacaan_2'},
+            {'data': 'sum_radiasi_cal_per_cm2'},
+            {'data': 'sum_radiasi_joule'},
+          ],
+          //- 'columnDefs': [
+          //-   {targets: 1, width: '20%'}
+          //- ]
+        });
+    });
