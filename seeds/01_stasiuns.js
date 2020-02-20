@@ -202,7 +202,7 @@ exports.seed = function(knex) {
         {"id":"193","nama_stasiun":"Stasiun Meteorologi Banyuwangi","wmoid":"96987","type_mkg":"m","latitude":"-8.215","longitude":"114.3553","elevation_m":"52","nama_kabupaten":"Kab. Banyuwangi","nama_propinsi":"Jawa Timur","region_id":3},
         {"id":"194","nama_stasiun":"Stasiun Geofisika Tretes","wmoid":"96945","type_mkg":"g","latitude":"-7.70456","longitude":"112.63533","elevation_m":"832","nama_kabupaten":"Kab. Pasuruan","nama_propinsi":"Jawa Timur","region_id":3},
         {"id":"195","nama_stasiun":"Stasiun Meteorologi Juanda","wmoid":"96935","type_mkg":"m","latitude":"-7.3846","longitude":"112.7833","elevation_m":"3","nama_kabupaten":"Kab. Sidoarjo","nama_propinsi":"Jawa Timur","region_id":3},
-        {"id":"196","nama_stasiun":"tes2","wmoid":"99977","type_mkg":"k","latitude":"-8.4","longitude":"115.3","elevation_m":"4","nama_kabupaten":"","nama_propinsi":"","region_id":""}
+        //{"id":"196","nama_stasiun":"tes2","wmoid":"99977","type_mkg":"k","latitude":"-8.4","longitude":"115.3","elevation_m":"4","nama_kabupaten":"","nama_propinsi":"","region_id":""}
         ]
 
       );
